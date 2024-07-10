@@ -11,16 +11,6 @@ const {
 const app = express();
 
 const PORT = 3000;
-const friends = [
-  {
-    id: 0,
-    name: "Sir Isaac Newton",
-  },
-  {
-    id: 1,
-    name: "Albert Einstein",
-  },
-];
 
 // First Middleware
 app.use((req, res, next) => {
