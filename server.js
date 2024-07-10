@@ -1,5 +1,13 @@
 const express = require("express");
-
+const {
+  getMessages,
+  postMessage,
+} = require("./controllers/messages.controller");
+const {
+  postFriends,
+  getAllFriends,
+  getFriendById,
+} = require("./controllers/friends.controller");
 const app = express();
 
 const PORT = 3000;
@@ -25,46 +33,17 @@ app.use((req, res, next) => {
 
 app.use(express.json()); // sets body to {} if nothing is passed in request
 
-app.post("/friends", (req, res) => {
-  if (!req.body.name) {
-    return res.status(400).json({
-      error: "Missing Friend Name",
-    });
-    // Do not run any code if no friend is added
-  }
-  const newFriend = {
-    name: req.body.name,
-    id: friends.length,
-  };
-
-  friends.push(newFriend);
-  res.json(newFriend);
-});
-
 app.get("/", (req, res) => {
   // express will convert this to json
   res.json(friends);
 });
 
-app.get("/friends/:id", (req, res) => {
-  const friendId = parseInt(req.params.id);
-  const friend = friends[friendId];
-  if (friend) {
-    res.status(200).json(friend);
-  } else {
-    res.status(404).json({
-      error: "No Friends With this id",
-    });
-  }
-});
+app.post("/friends", postFriends);
+app.get("/friend/:id", getFriendById);
+app.get("/friends", getAllFriends);
 
-app.get("/friend", (req, res) => {
-  res.json(friends);
-});
-
-app.post("/messages", async (req, res) => {
-  console.log("Updating Messages");
-});
+app.get("/messages", getMessages);
+app.post("/messages", postMessage);
 
 app.listen(PORT, () => {
   console.log(`Server is listening to ${PORT}`);
