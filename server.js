@@ -1,13 +1,7 @@
 const express = require("express");
-const {
-  getMessages,
-  postMessage,
-} = require("./controllers/messages.controller");
-const {
-  postFriends,
-  getAllFriends,
-  getFriendById,
-} = require("./controllers/friends.controller");
+
+const friendsRouter = require("./routes/friends.router");
+const messagesRouter = require("./routes/messages.router");
 const app = express();
 
 const PORT = 3000;
@@ -23,18 +17,13 @@ app.use((req, res, next) => {
 
 app.use(express.json()); // sets body to {} if nothing is passed in request
 
+app.use("/friends", friendsRouter);
+app.use("/messages", messagesRouter);
+
 app.get("/", (req, res) => {
   // express will convert this to json
   res.json(friends);
 });
-
-app.post("/friends", postFriends);
-app.get("/friend/:id", getFriendById);
-app.get("/friends", getAllFriends);
-
-app.get("/messages", getMessages);
-app.post("/messages", postMessage);
-
 app.listen(PORT, () => {
   console.log(`Server is listening to ${PORT}`);
 });
