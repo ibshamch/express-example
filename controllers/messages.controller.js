@@ -3,7 +3,7 @@ function getMessages(req, res) {
 }
 
 function postMessage(req, res) {
-  res.send(req.body); // will return an empty object
+  res.send(req.body); // will return an empty object if req is empty
 }
 
 module.exports = {
